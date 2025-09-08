@@ -145,6 +145,6 @@ const Ticket = sequelize.define("Ticket", {
     type: DataTypes.JSON,
     defaultValue: [{ status: "create", time: new Date() }]
   }
-}, { timestamps: true });
+}, {tableName: "tickets", timestamps: true });
 
 export default Ticket;
