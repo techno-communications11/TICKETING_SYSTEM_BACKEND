@@ -63,6 +63,7 @@ const logsModule = sequelize.define("Logs", {
         allowNull: false
     }
 }, {
+    tableName: "logs",
     timestamps: true
 });
 
