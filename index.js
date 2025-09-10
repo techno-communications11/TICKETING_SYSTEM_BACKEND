@@ -34,7 +34,7 @@ const app = express();
 app.use(useragent.express());
 app.use(cors({
     origin: "*",
-    // origin: ["http://localhost:5173","http://localhost:3000","https://ticketing-system-updated.vercel.app", "https://ticketing-module2.vercel.app", 'http://localhost:3200', 'http://localhost:3201', 'http://localhost:3202', 'https://ticketing-systems-five.vercel.app', 'https://ticketing-systems2.vercel.app', 'https://ticketing-system-sever.onrender.com'],
+     origin: [ 'https://ticketing.techno-communications.com'],
     methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type'],
 }));
@@ -44,7 +44,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         // origin: "*",
-        origin: ["http://localhost:5173", "http://localhost:3000", "https://ticketing-system-updated.vercel.app", "https://ticketing-module2.vercel.app", 'http://localhost:3200', 'http://localhost:3201', 'http://localhost:3202', 'https://ticketing-systems-five.vercel.app', 'https://ticketing-systems2.vercel.app', 'https://ticketingapi.techno-communications.com/', 'https://ticketing.techno-communications.com'],
+        origin: ['https://ticketing.techno-communications.com'],
         methods: ['GET', 'POST', 'DELETE'],
         allowedHeaders: ['Content-Type'],
     }
