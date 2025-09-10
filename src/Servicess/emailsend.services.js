@@ -188,8 +188,8 @@ export const sendEmailToManagers = async (TicketId, newTicket) => {
         const sendEmails = await Promise.all([
             resend.emails.send({
                 from: 'ticketing@techno-communications.com',
-                // to: marketManagerEmail,
-                to: 'suffiyanahmed804092@gmail.com',
+                to: marketManagerEmail,
+                // to: 'suffiyanahmed804092@gmail.com',
                 subject: `🚀 Approval Needed: Ticket #${TicketId}`,
                 html: emailBody
             }),

@@ -33,8 +33,8 @@ const connectionDB = async () => {
 const app = express();
 app.use(useragent.express());
 app.use(cors({
-    origin: "*",
-     origin: [ 'https://ticketing.techno-communications.com'],
+    // origin: "*",
+    origin: ['https://ticketing.techno-communications.com', 'http://localhost:5174', 'http://localhost:5173'],
     methods: ['GET', 'POST', 'DELETE'],
     allowedHeaders: ['Content-Type'],
 }));
@@ -44,7 +44,7 @@ const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
         // origin: "*",
-        origin: ['https://ticketing.techno-communications.com'],
+        origin: ['https://ticketing.techno-communications.com', 'http://localhost:5174', 'http://localhost:5173'],
         methods: ['GET', 'POST', 'DELETE'],
         allowedHeaders: ['Content-Type'],
     }
