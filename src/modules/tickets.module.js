@@ -92,6 +92,7 @@ const Ticket = sequelize.define("Ticket", {
     primaryKey: true,
     defaultValue: () => uuidv4(), // har naya record pe UUID banega
   },
+  
   ticketId: { type: DataTypes.STRING, allowNull: false },
   name: { type: DataTypes.STRING, allowNull: false },
   phone: { type: DataTypes.STRING, allowNull: false },

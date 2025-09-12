@@ -408,3 +408,29 @@ export const reopenTicketServices = async (_id, reopenreason) => {
         throw new Error(error.message);
     }
 }
+
+
+export const deleteTicketsService = async (ids) => {
+    try {
+        // Check agar array empty ya invalid hai
+        if (!ids || ids.length === 0) {
+            return "⚠️ Please provide at least one ID!";
+        }
+
+        // Delete tickets using array of IDs
+        const deletedCount = await Ticket.destroy({
+            where: {
+                id: ids   // Sequelize automatically handles single ya multiple IDs
+            }
+        });
+
+        if (deletedCount === 0) {
+            return "❌ No tickets found for the given IDs!";
+        }
+
+        return `✅ Successfully deleted ${deletedCount} ticket(s).`;
+    } catch (error) {
+        console.error("❌ Error in deleteTicketsService:", error.message);
+        throw error;
+    }
+};

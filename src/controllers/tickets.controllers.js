@@ -1,6 +1,6 @@
 import { getAllUserDataServices, getCurrentUserDataServices } from "../Servicess/auth.services.js";
 import { sendemailServices, sendEmailToManagers, sendemailtomanagerServices } from "../Servicess/emailsend.services.js";
-import { approvedTicketServices, assignTicketService, closedTicketFromAgentServices, completeTicketFromAgentServices, createTicketsServices, deniedTicketServices, getAllTicketsDataServices, reopenTicketServices, updateAgnetStatusServices, updateTicketProgressService, updateTicketStatusService } from "../Servicess/tickets.services.js"
+import { approvedTicketServices, assignTicketService, closedTicketFromAgentServices, completeTicketFromAgentServices, createTicketsServices, deleteTicketsService, deniedTicketServices, getAllTicketsDataServices, reopenTicketServices, updateAgnetStatusServices, updateTicketProgressService, updateTicketStatusService } from "../Servicess/tickets.services.js"
 
 export const createTicketsControllers = async (req, res) => {
     try {
@@ -26,8 +26,8 @@ export const getAllTicketsControllers = async (req, res) => {
 
 export const assignedTicketController = async (req, res) => {
     try {
-        const { id, assignerId, assignerName, ticketId, formData, email, assignedmanagername,assign_email,approved } = req.body;
-        const response = await assignTicketService(id, assignerId, assignerName, assignedmanagername,assign_email,approved);
+        const { id, assignerId, assignerName, ticketId, formData, email, assignedmanagername, assign_email, approved } = req.body;
+        const response = await assignTicketService(id, assignerId, assignerName, assignedmanagername, assign_email, approved);
         const sendemail = await sendemailServices(ticketId, formData, email)
         if (sendemail) return res.status(200).json({ status: 200, sucess: true, message: "sucessfully ticket save and also send mail", data: response })
         return res.status(200).json({ status: 200, sucess: true, message: "sucess assign", })
@@ -208,3 +208,32 @@ export const reopenTicketController = async (req, res) => {
         });
     }
 }
+
+export const deleteTicketsController = async (req, res) => {
+    try {
+        const { ids } = req.body;
+
+        // Validate input
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return res.status(400).json({
+                status: 400,
+                message: "⚠️ Please provide an array of ticket IDs!"
+            });
+        }
+
+        const response = await deleteTicketsService(ids);
+
+        return res.status(200).json({
+            status: 200,
+            message: response
+        });
+    } catch (error) {
+        console.error("❌ Error in deleteTicketsController:", error.message);
+
+        return res.status(500).json({
+            status: 500,
+            message: "❌ Internal Server Error!",
+            error: error.message
+        });
+    }
+};

@@ -12,10 +12,10 @@ export const TicketProgressModule = sequelize.define(
         ticketId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: "Tickets", // Make sure this matches your Tickets table name
-                key: "id",
-            },
+            // references: {
+            //     model: "Tickets", // Make sure this matches your Tickets table name
+            //     key: "id",
+            // },
             onDelete: "CASCADE",
             onUpdate: "CASCADE",
         },
