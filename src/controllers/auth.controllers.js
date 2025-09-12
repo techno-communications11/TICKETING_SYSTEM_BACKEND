@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
-import { automaticallyesetPassordServices, deleteUserAccountService, findByEmailService, getAllUserDataServices, updateUserPasswordServices, userRregisteredServices, userUsedInDesktopServices } from "../Servicess/auth.services.js";
+import { automaticallyesetPassordServices, deleteUserAccountService, findByEmailService, getAllUserDataServices, updateUserPasswordServices, updateUserService, userRregisteredServices, userUsedInDesktopServices } from "../Servicess/auth.services.js";
 import serverConfig from '../config/server.config.js';
 import { saveLogsServices } from '../Servicess/logs.services.js';
 import axios from 'axios';
@@ -29,7 +29,7 @@ const registered = async (req, res) => {
             name,
             email,
             password: hashpass,
-            original_password:password,
+            original_password: password,
             phone,
             department,
             subDepartment,
@@ -121,7 +121,7 @@ const login = async (req, res) => {
         }
         // console.log("logsdata", logsData)
         // console.log("location", locationInfo.city, locationInfo.country_name, locationInfo)
-        // const response = await saveLogsServices(logsData)
+        const response = await saveLogsServices(logsData)
         return res.status(200).json({
             status: 200,
             success: true,
@@ -229,11 +229,22 @@ const userUsedInDesktopController = async (req, res) => {
         const response = await userUsedInDesktopServices(id);
         return res.status(200).json({ status: 200, sucess: true, message: "user used in desktop successfully", data: response });
     } catch (error) {
-        console.log("ERROR",error.message)
+        console.log("ERROR", error.message)
         return res.status(500).json({ status: 500, sucess: false, message: "server error", error: error.message });
     }
 }
 
+const userUpdateController = async (req, res) => {
+    try {
+        const { id, data } = req.body;
+        await updateUserService( id, data);
+        return res.status(200).json({ status: 200, sucess: true, message: "user used in desktop successfully" });
+
+    } catch (error) {
+        console.log("ERROR", error.message)
+        return res.status(500).json({ status: 500, sucess: false, message: "server error", error: error.message });
+    }
+}
 export {
     registered,
     login,
@@ -241,5 +252,6 @@ export {
     deleteUser,
     updateUserPasswordController,
     resetUserPasswordAutomaticallyController,
-    userUsedInDesktopController
+    userUsedInDesktopController,
+    userUpdateController
 }

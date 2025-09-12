@@ -25,9 +25,8 @@ const messageModule = sequelize.define("Message", {
     id: {
         type: DataTypes.STRING,
         primaryKey: true,
-        defaultValue: () => uuidv4()
+        defaultValue: () => uuidv4(), // Sequelize me UUID generate
     },
-
     sender: {
         type: DataTypes.STRING,
         allowNull: false,

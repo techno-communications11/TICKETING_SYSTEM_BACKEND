@@ -183,6 +183,20 @@ const updateUserPasswordServices = async (id, password, original_password) => {
         throw error;
     }
 };
+const updateUserService = async (id, updatedFields) => {
+    try {
+        // Update row
+        await Auth.update(updatedFields, {
+            where: { id }
+        });
+
+        // Return updated row
+        const updatedUser = await Auth.findOne({ where: { id } });
+        return updatedUser;
+    } catch (error) {
+        throw error;
+    }
+};
 
 // Automatically reset password
 const automaticallyesetPassordServices = async (id, password) => {
@@ -217,5 +231,6 @@ export {
     getCurrentUserDataServices,
     updateUserPasswordServices,
     automaticallyesetPassordServices,
-    userUsedInDesktopServices
+    userUsedInDesktopServices,
+    updateUserService
 }

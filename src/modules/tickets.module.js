@@ -82,14 +82,15 @@
 
 import { DataTypes } from "sequelize";
 import sequelize from "../config/db.js"; // Make sure this points to your MySQL Sequelize instance
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+
 
 const Ticket = sequelize.define("Ticket", {
   // ticketId: { type: DataTypes.STRING, allowNull: false, unique: true },
   id: {
     type: DataTypes.STRING,
     primaryKey: true,
-    defaultValue: () => uuidv4() // MongoDB style unique ID
+    defaultValue: () => uuidv4(), // har naya record pe UUID banega
   },
   ticketId: { type: DataTypes.STRING, allowNull: false },
   name: { type: DataTypes.STRING, allowNull: false },
@@ -151,6 +152,6 @@ const Ticket = sequelize.define("Ticket", {
     type: DataTypes.JSON,
     defaultValue: [{ status: "create", time: new Date() }]
   }
-}, {tableName:"tickets", timestamps: true });
+}, { tableName: "tickets", timestamps: true });
 
 export default Ticket;
