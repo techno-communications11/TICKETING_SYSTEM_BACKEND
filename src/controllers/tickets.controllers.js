@@ -1,6 +1,6 @@
 import { getAllUserDataServices, getCurrentUserDataServices } from "../Servicess/auth.services.js";
 import { sendemailServices, sendEmailToManagers, sendemailtomanagerServices } from "../Servicess/emailsend.services.js";
-import { approvedTicketServices, assignTicketService, closedTicketFromAgentServices, completeTicketFromAgentServices, createTicketsServices, deleteTicketsService, deniedTicketServices, getAllTicketsDataServices, reopenTicketServices, updateAgnetStatusServices, updateTicketProgressService, updateTicketStatusService } from "../Servicess/tickets.services.js"
+import { approvedTicketServices, assignTicketService, closedTicketFromAgentServices, completeTicketFromAgentServices, createTicketsServices, deleteTicketsService, deniedTicketServices, getAllTicketsDataServices, reopenTicketServices, transferTicketServices, updateAgnetStatusServices, updateTicketProgressService, updateTicketStatusService } from "../Servicess/tickets.services.js"
 
 export const createTicketsControllers = async (req, res) => {
     try {
@@ -235,5 +235,39 @@ export const deleteTicketsController = async (req, res) => {
             message: "❌ Internal Server Error!",
             error: error.message
         });
+    }
+};
+
+
+export const transferedTicketController = async (req, res) => {
+    try {
+        const { ticketId, newOwnerId, transferReason, departmentName } = req.body;
+
+        // Validate input
+        if (!ticketId || !newOwnerId) {
+            return res.status(400).json({ success: false, message: 'ticketId and newOwnerId are required' });
+        }
+
+        // Call service
+        const response = await transferTicketServices(ticketId, newOwnerId, transferReason, departmentName);
+
+        // Return response
+        if (response.success) {
+            return res.status(200).json({
+                success: true,
+                message: response.message,
+                ticket: response.ticket
+            });
+        } else {
+            return res.status(500).json({
+                success: false,
+                message: response.message,
+                error: response.error || null
+            });
+        }
+
+    } catch (error) {
+        console.error('Error in transferedTicketController:', error);
+        return res.status(500).json({ success: false, message: 'Internal Server Error', error });
     }
 };

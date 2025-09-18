@@ -1,5 +1,5 @@
 import express from 'express';
-import { approvedTicketController, assignedTicketController, closeTicketFromManagerController, completeTicketFromAgentController, createTicketsControllers, deleteTicketsController, deniedTicketController, getAllTicketsControllers, reopenTicketController, updateTicektStatusControllers, updateTicketProgressController, updatingAgentStatusController } from '../controllers/tickets.controllers.js';
+import { approvedTicketController, assignedTicketController, closeTicketFromManagerController, completeTicketFromAgentController, createTicketsControllers, deleteTicketsController, deniedTicketController, getAllTicketsControllers, reopenTicketController, transferedTicketController, updateTicektStatusControllers, updateTicketProgressController, updatingAgentStatusController } from '../controllers/tickets.controllers.js';
 
 
 const ticketRoute = express.Router();
@@ -16,6 +16,7 @@ ticketRoute.post('/updateTicketProgress',updateTicketProgressController);
 ticketRoute.post('/deniedTicket',deniedTicketController);
 ticketRoute.post('/reopenTicket',reopenTicketController)
 ticketRoute.post('/delete-tickets',deleteTicketsController)
+ticketRoute.post('/transfered-ticket',transferedTicketController)
 
 
 export default ticketRoute;

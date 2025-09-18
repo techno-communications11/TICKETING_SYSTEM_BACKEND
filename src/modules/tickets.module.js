@@ -92,7 +92,7 @@ const Ticket = sequelize.define("Ticket", {
     primaryKey: true,
     defaultValue: () => uuidv4(), // har naya record pe UUID banega
   },
-  
+
   ticketId: { type: DataTypes.STRING, allowNull: false },
   name: { type: DataTypes.STRING, allowNull: false },
   phone: { type: DataTypes.STRING, allowNull: false },
@@ -149,7 +149,17 @@ const Ticket = sequelize.define("Ticket", {
   districtManager_id: { type: DataTypes.STRING, allowNull: true },
   marketManager_id: { type: DataTypes.STRING, allowNull: true },
   assignedmanagername: { type: DataTypes.STRING, allowNull: true },
-  tranfereticket: { type: DataTypes.STRING, allowNull: true },
+  // istranfereticket: { type: DataTypes.BOOLEAN, default: false },
+  istransfereticket: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,  // "default" nahi, "defaultValue" use karo
+    allowNull: false       // optional, agar aap chahte ho ki ye kabhi NULL na ho
+  },
+  currentOwnerId: { type: DataTypes.STRING, allowNull: true },
+  previousOwnerId: { type: DataTypes.STRING, allowNull: true },
+  departmentName: { type: DataTypes.STRING, allowNull: true },
+  transferReason: { type: DataTypes.STRING, allowNull: true },
+  transferDate: { type: DataTypes.STRING, allowNull: true },
   progress: {
     type: DataTypes.JSON,
     defaultValue: [{ status: "create", time: new Date() }]

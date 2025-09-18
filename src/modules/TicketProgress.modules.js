@@ -9,16 +9,16 @@ export const TicketProgressModule = sequelize.define(
             autoIncrement: true,
             primaryKey: true,
         },
-        ticketId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            // references: {
-            //     model: "Tickets", // Make sure this matches your Tickets table name
-            //     key: "id",
-            // },
-            onDelete: "CASCADE",
-            onUpdate: "CASCADE",
-        },
+        // ticketId: {
+        //     type: DataTypes.STRING,
+        //     allowNull: false,
+        //     // references: {
+        //     //     model: "Tickets", // Make sure this matches your Tickets table name
+        //     //     key: "id",
+        //     // },
+        //     onDelete: "CASCADE",
+        //     onUpdate: "CASCADE",
+        // },
         status: {
             type: DataTypes.STRING,
             allowNull: false,

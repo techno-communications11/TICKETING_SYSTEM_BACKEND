@@ -434,3 +434,29 @@ export const deleteTicketsService = async (ids) => {
         throw error;
     }
 };
+export const transferTicketServices = async (id, newOwnerId, transferReason, departmentName) => {
+    try {
+        // 1. Find the ticket
+        const ticket = await Ticket.findByPk(id);
+
+        if (!ticket) {
+            return { success: false, message: 'Ticket not found' };
+        }
+
+        // 2. Update transfer fields
+        ticket.previousOwnerId = ticket.currentOwnerId; // save current owner
+        ticket.currentOwnerId = newOwnerId;            // assign new owner
+        ticket.istransfereticket = true;              // mark as transferred
+        ticket.transferReason = transferReason || null;
+        ticket.transferDate = new Date().toISOString(); // current timestamp
+        ticket.departmentName = departmentName
+
+        // 3. Save changes
+        await ticket.save();
+
+        return { success: true, message: 'Ticket transferred successfully', ticket };
+    } catch (error) {
+        console.error('Error transferring ticket:', error);
+        return { success: false, message: 'Error transferring ticket', error };
+    }
+};
