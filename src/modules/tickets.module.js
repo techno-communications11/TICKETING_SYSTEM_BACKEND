@@ -149,6 +149,7 @@ const Ticket = sequelize.define("Ticket", {
   districtManager_id: { type: DataTypes.STRING, allowNull: true },
   marketManager_id: { type: DataTypes.STRING, allowNull: true },
   assignedmanagername: { type: DataTypes.STRING, allowNull: true },
+  tranfereticket: { type: DataTypes.STRING, allowNull: true },
   progress: {
     type: DataTypes.JSON,
     defaultValue: [{ status: "create", time: new Date() }]
