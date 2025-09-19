@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
-import { automaticallyesetPassordServices, deleteUserAccountService, findByEmailService, getAllUserDataServices, updateUserPasswordServices, updateUserService, userRregisteredServices, userUsedInDesktopServices } from "../Servicess/auth.services.js";
+import { automaticallyesetPassordServices, changePasswordService, deleteUserAccountService, findByEmailService, getAllUserDataServices, updateUserPasswordServices, updateUserService, userRregisteredServices, userUsedInDesktopServices } from "../Servicess/auth.services.js";
 import serverConfig from '../config/server.config.js';
 import { saveLogsServices } from '../Servicess/logs.services.js';
 import axios from 'axios';
@@ -237,7 +237,7 @@ const userUsedInDesktopController = async (req, res) => {
 const userUpdateController = async (req, res) => {
     try {
         const { id, data } = req.body;
-        await updateUserService( id, data);
+        await updateUserService(id, data);
         return res.status(200).json({ status: 200, sucess: true, message: "user used in desktop successfully" });
 
     } catch (error) {
@@ -245,6 +245,52 @@ const userUpdateController = async (req, res) => {
         return res.status(500).json({ status: 500, sucess: false, message: "server error", error: error.message });
     }
 }
+// Change Password Controller
+const changePasswordController = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        // check required fields
+        if (!email || !password) {
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: "Email and password are required",
+            });
+        }
+
+        // check user exist
+        const isExisting = await findByEmailService(email);
+        if (!isExisting) {
+            return res.status(404).json({
+                status: 404,
+                success: false,
+                message: "User not found",
+            });
+        }
+
+        // hash new password
+        const hashPass = await bcrypt.hash(password, 10);
+
+        // update password in DB
+        await changePasswordService(isExisting.id, hashPass);
+
+        return res.status(200).json({
+            status: 200,
+            success: true,
+            message: "Password changed successfully",
+        });
+    } catch (error) {
+        console.log("ERROR", error.message);
+        return res.status(500).json({
+            status: 500,
+            success: false,
+            message: "Server error",
+            error: error.message,
+        });
+    }
+};
+
 export {
     registered,
     login,
@@ -253,5 +299,6 @@ export {
     updateUserPasswordController,
     resetUserPasswordAutomaticallyController,
     userUsedInDesktopController,
-    userUpdateController
+    userUpdateController,
+    changePasswordController
 }

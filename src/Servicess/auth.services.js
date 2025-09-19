@@ -224,14 +224,15 @@ const userUsedInDesktopServices = async (id) => {
     }
 };
 
+
 export const changePasswordService = async (id, newPassword) => {
   try {
     // password ko hash karo
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     // db me update karo
     const response = await Auth.update(
-      { password: hashedPassword },
+      { password: newPassword },
       { where: { id }, returning: true }
     );
 

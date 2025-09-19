@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteUser, getAllUsers, login, registered, resetUserPasswordAutomaticallyController, updateUserPasswordController, userUpdateController, userUsedInDesktopController } from "../controllers/auth.controllers.js";
+import { changePasswordController, deleteUser, getAllUsers, login, registered, resetUserPasswordAutomaticallyController, updateUserPasswordController, userUpdateController, userUsedInDesktopController } from "../controllers/auth.controllers.js";
 
 const authrouter = express.Router();
 
@@ -11,5 +11,6 @@ authrouter.delete('/deleteUser/:id',deleteUser)
 authrouter.post('/resetUserPasswordAutomatically',resetUserPasswordAutomaticallyController)
 authrouter.post('/userUsedInDesktop',userUsedInDesktopController)
 authrouter.post('/user-update',userUpdateController)
+authrouter.post('/change-user-password',changePasswordController)
 
 export default authrouter;
