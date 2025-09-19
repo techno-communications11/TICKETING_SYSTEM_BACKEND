@@ -223,6 +223,24 @@ const userUsedInDesktopServices = async (id) => {
         throw error;
     }
 };
+
+export const changePasswordService = async (id, newPassword) => {
+  try {
+    // password ko hash karo
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // db me update karo
+    const response = await Auth.update(
+      { password: hashedPassword },
+      { where: { id }, returning: true }
+    );
+
+    // response[1] me updated records hote hain (sequelize ka behaviour)
+    return response[1][0]; 
+  } catch (error) {
+    throw error;
+  }
+};
 export {
     findByEmailService,
     userRregisteredServices,
