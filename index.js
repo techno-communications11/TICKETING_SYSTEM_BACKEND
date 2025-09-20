@@ -392,8 +392,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // OR (agar express >= 4.16 use kar rahe ho to built-in parser hai)
 // ✅ INCREASED LIMIT — ye sabhi routes se PEHLE hona chahiye
-app.use(express.json({ limit: "50mb", type: ["application/json", "text/plain"] }));
-app.use(express.urlencoded({ extended: true, limit: "50mb" }))
+app.use(express.json({ limit: "5mb", type: ["application/json", "text/plain"] }));
+app.use(express.urlencoded({ extended: true, limit: "5mb" }))
 
 app.use('/', router)
 
