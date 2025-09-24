@@ -62,7 +62,7 @@ const registered = async (req, res) => {
 const login = async (req, res) => {
     try {
         const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
-        console.log("IP FOR DECTEC LOCATION", ip)
+        // console.log("IP FOR DECTEC LOCATION", ip)
         const { login } = req.body;
         const { email, password } = login;
         if (!email || !password) {
@@ -93,7 +93,8 @@ const login = async (req, res) => {
                 department: existingUser.department,
                 subDepartment: existingUser.subDepartment,
                 name: existingUser.name,
-                doorcode: existingUser.doorcode
+                doorcode: existingUser.doorcode,
+                first: existingUser.first,
             },
             process.env.JWT_SECRET || "defaultSecretKey",
             { expiresIn: "1h" }
