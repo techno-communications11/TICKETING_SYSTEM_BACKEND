@@ -186,12 +186,13 @@ const updateUserPasswordServices = async (id, password, original_password) => {
 const updateUserService = async (id, updatedFields) => {
     try {
         // Update row
-        await Auth.update(updatedFields, {
+     await Auth.update(updatedFields, {
             where: { id }
         });
-
+        // console.log("RESPONSE", respo)
         // Return updated row
         const updatedUser = await Auth.findOne({ where: { id } });
+        // console.log("RESPONSE updatedUser", updatedUser)
         return updatedUser;
     } catch (error) {
         throw error;
@@ -226,21 +227,21 @@ const userUsedInDesktopServices = async (id) => {
 
 
 export const changePasswordService = async (id, newPassword) => {
-  try {
-    // password ko hash karo
-    // const hashedPassword = await bcrypt.hash(newPassword, 10);
+    try {
+        // password ko hash karo
+        // const hashedPassword = await bcrypt.hash(newPassword, 10);
 
-    // db me update karo
-    const response = await Auth.update(
-      { password: newPassword },
-      { where: { id }, returning: true }
-    );
+        // db me update karo
+        const response = await Auth.update(
+            { password: newPassword },
+            { where: { id }, returning: true }
+        );
 
-    // response[1] me updated records hote hain (sequelize ka behaviour)
-    return response[1][0]; 
-  } catch (error) {
-    throw error;
-  }
+        // response[1] me updated records hote hain (sequelize ka behaviour)
+        return response[1][0];
+    } catch (error) {
+        throw error;
+    }
 };
 export {
     findByEmailService,
