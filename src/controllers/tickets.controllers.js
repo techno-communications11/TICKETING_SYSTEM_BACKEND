@@ -1,6 +1,6 @@
 import { getAllUserDataServices, getCurrentUserDataServices } from "../Servicess/auth.services.js";
 import { sendemailServices, sendEmailToManagers, sendemailtomanagerServices } from "../Servicess/emailsend.services.js";
-import { approvedTicketServices, assignTicketService, closedTicketFromAgentServices, completeTicketFromAgentServices, createTicketsServices, deleteTicketsService, deniedTicketServices, getAllTicketsDataServices, reopenTicketServices, transferTicketServices, updateAgnetStatusServices, updateTicketProgressService, updateTicketStatusService } from "../Servicess/tickets.services.js"
+import { approvedTicketServices, assignTicketService, closedTicketFromAgentServices, completeTicketFromAgentServices, createTicketsServices, deleteTicketsService, deniedTicketServices, getAllTicketsDataServices, reopenTicketServices, transferTicketServices, updateAgnetStatusServices, updateTicketProgressService, updateTicketsServices, updateTicketStatusService } from "../Servicess/tickets.services.js"
 
 export const createTicketsControllers = async (req, res) => {
     try {
@@ -241,7 +241,7 @@ export const deleteTicketsController = async (req, res) => {
 
 export const transferedTicketController = async (req, res) => {
     try {
-        const { ticketId, newOwnerId, transferReason, departmentName } = req.body;
+        const { ticketId, newOwnerId, transferReason, departmentName, managerName, managerName_email } = req.body;
 
         // Validate input
         if (!ticketId || !newOwnerId) {
@@ -249,7 +249,7 @@ export const transferedTicketController = async (req, res) => {
         }
 
         // Call service
-        const response = await transferTicketServices(ticketId, newOwnerId, transferReason, departmentName);
+        const response = await transferTicketServices(ticketId, newOwnerId, transferReason, departmentName, managerName, managerName_email);
 
         // Return response
         if (response.success) {
@@ -271,3 +271,21 @@ export const transferedTicketController = async (req, res) => {
         return res.status(500).json({ success: false, message: 'Internal Server Error', error });
     }
 };
+
+
+export const editTicketsController = async (req, res) => {
+    try {
+        const { id, data } = req.body;
+        const response = await updateTicketsServices(id, data);
+        console.log(response)
+        return res.status(200).json({ status: 200, message: "SuccessFully" })
+    } catch (error) {
+        console.error("❌ Error in deleteTicketsController:", error.message);
+
+        return res.status(500).json({
+            status: 500,
+            message: "❌ Internal Server Error!",
+            error: error.message
+        });
+    }
+}
