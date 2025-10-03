@@ -309,7 +309,7 @@ const authModule = sequelize.define("User", {
         defaultValue: [null]
     },
     markets: {
-        type: DataTypes.JSON,
+        type: DataTypes.STRING,
         defaultValue: null
     },
     store_detail: {
