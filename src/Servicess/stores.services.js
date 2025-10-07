@@ -57,6 +57,7 @@ export const addStoresDataExcelFormatServices = async (payload) => {
 
 export const addStoresDataFormatServices = async (payload) => {
     try {
+        // console.log("STORE PAYLOAD:", payload)
         const response = await Stores.create({ ...payload });
         return response.save();
     } catch (error) {

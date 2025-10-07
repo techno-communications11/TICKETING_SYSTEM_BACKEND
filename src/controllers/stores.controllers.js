@@ -63,7 +63,7 @@ const addStoresExcelFormatDataController = async (req, res) => {
 
 const addStoresFormatDataController = async (req, res) => {
     try {
-        const { obj } = req.body;
+        const  obj  = req.body;
         console.log("obj", obj)
         const response = await addStoresDataFormatServices(obj);
         return res.status(200).json({ status: 200, sucess: true, message: "sucess" })

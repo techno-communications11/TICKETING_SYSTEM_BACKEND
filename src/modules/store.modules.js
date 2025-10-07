@@ -48,38 +48,38 @@ import sequelize from "../config/db.js"; // <-- apne DB connection ka path chang
 const Store = sequelize.define("Store", {
     bdi_id: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     dm_name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     door_code: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     market: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     store_addres: {   // typo fix karna hai to "store_address" kar lena
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     store_name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
     stroe_email: {   // typo fix karna hai to "store_email" kar lena
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
         validate: {
             isEmail: true
         }
     },
     store_phone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     }
 }, {
     tableName: "stores", // SQL table ka naam

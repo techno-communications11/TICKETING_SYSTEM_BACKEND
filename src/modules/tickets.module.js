@@ -105,6 +105,7 @@ const Ticket = sequelize.define("Ticket", {
   ticketDescription: { type: DataTypes.TEXT, allowNull: false },
   userId: { type: DataTypes.STRING, allowNull: false },
   files: { type: DataTypes.JSON, defaultValue: [] },
+  documents: { type: DataTypes.JSON, defaultValue: [] },
   assignerId: { type: DataTypes.STRING, allowNull: true },
   assignerName: { type: DataTypes.STRING, allowNull: true },
   status: { type: DataTypes.STRING, defaultValue: "pending" },
