@@ -112,7 +112,27 @@ const findByEmailService = async (email) => {
         throw error;
     }
 };
+// ✅ Find multiple emails at once
+const findByMultipleEmailService = async (emails) => {
+  try {
+    const users = await Auth.findAll({
+      where: { email: emails },
+    });
+    return users;
+  } catch (error) {
+    throw error;
+  }
+};
 
+// ✅ Bulk register users
+const userBulkRegisterService = async (payloadArray) => {
+  try {
+    const response = await Auth.bulkCreate(payloadArray, { returning: true });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 // Register new user
 const userRregisteredServices = async (payload) => {
     try {
@@ -148,6 +168,27 @@ const deleteUserAccountService = async (id) => {
     try {
         const response = await Auth.destroy({ where: { id } });
         return response;
+    } catch (error) {
+        throw error;
+    }
+};
+// Delete one or multiple user accounts by ID(s)
+const deleteMultipleUserAccountService = async (ids) => {
+    try {
+        // ✅ Ensure ids is always an array
+        const idArray = Array.isArray(ids) ? ids : [ids];
+
+        // ✅ Delete all users matching the IDs
+        const response = await Auth.destroy({
+            where: {
+                id: idArray
+            }
+        });
+
+        return {
+            deletedCount: response,
+            message: `${response} user(s) deleted successfully`
+        };
     } catch (error) {
         throw error;
     }
@@ -252,5 +293,8 @@ export {
     updateUserPasswordServices,
     automaticallyesetPassordServices,
     userUsedInDesktopServices,
-    updateUserService
+    updateUserService,
+    findByMultipleEmailService,
+    userBulkRegisterService,
+    deleteMultipleUserAccountService
 }

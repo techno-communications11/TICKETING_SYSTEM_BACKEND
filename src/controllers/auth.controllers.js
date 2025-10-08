@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken'
-import { automaticallyesetPassordServices, changePasswordService, deleteUserAccountService, findByEmailService, getAllUserDataServices, updateUserPasswordServices, updateUserService, userRregisteredServices, userUsedInDesktopServices } from "../Servicess/auth.services.js";
+import { automaticallyesetPassordServices, changePasswordService, deleteMultipleUserAccountService, deleteUserAccountService, findByEmailService, findByMultipleEmailService, getAllUserDataServices, updateUserPasswordServices, updateUserService, userBulkRegisterService, userRregisteredServices, userUsedInDesktopServices } from "../Servicess/auth.services.js";
 import serverConfig from '../config/server.config.js';
 import { saveLogsServices } from '../Servicess/logs.services.js';
 import axios from 'axios';
@@ -56,6 +56,76 @@ const registered = async (req, res) => {
             success: false,
             message: "internal server error",
             errormessage: error.message
+        });
+    }
+};
+const MultipleRegistered = async (req, res) => {
+    try {
+        const { signupData } = req.body;
+
+        if (!signupData || !Array.isArray(signupData) || signupData.length === 0) {
+            return res.status(400).json({
+                status: 400,
+                success: false,
+                message: "Invalid request. signupData should be a non-empty array.",
+            });
+        }
+
+        // ✅ Check for existing users first
+        const emails = signupData.map((u) => u.email);
+        const existingUsers = await findByMultipleEmailService(emails);
+
+        if (existingUsers.length > 0) {
+            const existingEmails = existingUsers.map((u) => u.email);
+            return res.status(409).json({
+                status: 409,
+                success: false,
+                message: "Some users already exist with these emails.",
+                existingEmails,
+            });
+        }
+
+        // ✅ Hash passwords for all users
+        const usersToCreate = await Promise.all(
+            signupData.map(async (user) => ({
+                ...user,
+                password: await bcrypt.hash(user.password, 10),
+                original_password: user.password,
+            }))
+        );
+
+        // ✅ Save all users via service
+        const createdUsers = await userBulkRegisterService(usersToCreate);
+
+        // ✅ Generate tokens for each user (optional)
+        const tokens = createdUsers.map((user) =>
+            jwt.sign(
+                {
+                    department: user.department,
+                    subDepartment: user.subDepartment,
+                    name: user.name,
+                    doorcode: user.doorcode,
+                    store_detail: user.store_detail,
+                    managedDepartments: user.managedDepartments,
+                },
+                serverConfig.secretKey
+            )
+        );
+
+        return res.status(201).json({
+            status: 201,
+            success: true,
+            message: "Users registered successfully",
+            data: createdUsers,
+            tokens,
+        });
+    } catch (error) {
+        console.error("ERROR:", error.message);
+        return res.status(500).json({
+            status: 500,
+            success: false,
+            message: "Internal server error",
+            errormessage: error.message,
         });
     }
 };
@@ -211,6 +281,17 @@ const deleteUser = async (req, res) => {
         return res.status(500).json({ status: 500, success: false, message: "internal ser ver error", error: error.message })
     }
 }
+const deleteMultipleUser = async (req, res) => {
+    try {
+        const { id } = req.body;
+        console.log(id)
+        const response = await deleteMultipleUserAccountService(id);
+        console.log(response)
+        return res.status(200).json({ status: 200, success: true, message: "success" })
+    } catch (error) {
+        return res.status(500).json({ status: 500, success: false, message: "internal ser ver error", error: error.message })
+    }
+}
 
 const resetUserPasswordAutomaticallyController = async (req, res) => {
     try {
@@ -301,5 +382,7 @@ export {
     resetUserPasswordAutomaticallyController,
     userUsedInDesktopController,
     userUpdateController,
-    changePasswordController
+    changePasswordController,
+    MultipleRegistered,
+    deleteMultipleUser
 }
