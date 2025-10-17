@@ -355,6 +355,10 @@ const authModule = sequelize.define("User", {
     desktop: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    forgotpassword: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 }, {
     tableName: "users",

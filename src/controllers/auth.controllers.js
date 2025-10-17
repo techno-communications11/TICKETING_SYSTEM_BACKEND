@@ -131,10 +131,12 @@ const MultipleRegistered = async (req, res) => {
 };
 const login = async (req, res) => {
     try {
-        const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+        // const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
         // console.log("IP FOR DECTEC LOCATION", ip)
         const { login } = req.body;
-        const { email, password } = login;
+        // console.log("login", login)
+        const { email, password, ip } = login;
+        // console.log("IP", ip)
         if (!email || !password) {
             return res.status(400).json({
                 status: 400,
@@ -184,7 +186,7 @@ const login = async (req, res) => {
             user: existingUser.id,
             data: existingUser,
             status: "success",
-            ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
+            ip: ip,
             browser: userAgent.browser,
             os: userAgent.os,
             device: userAgent.platform,
@@ -193,14 +195,16 @@ const login = async (req, res) => {
         }
         // console.log("logsdata", logsData)
         // console.log("location", locationInfo.city, locationInfo.country_name, locationInfo)
-        const response = await saveLogsServices(logsData)
+        const response = await saveLogsServices(logsData);
+        // console.log(response)
         return res.status(200).json({
             status: 200,
             success: true,
             message: "Login successful",
             token: token,
             id: existingUser.id,
-            data: existingUser
+            data: existingUser,
+            forgotpassword: existingUser?.forgotpassword
         });
     } catch (error) {
         console.error("Login error:", error.message);
