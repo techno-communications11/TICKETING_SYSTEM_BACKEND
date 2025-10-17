@@ -59,12 +59,34 @@ export const addStoresDataFormatServices = async (payload) => {
     try {
         // console.log("STORE PAYLOAD:", payload)
         const response = await Stores.create({ ...payload });
-        return response.save();
+        return response;
     } catch (error) {
         console.error('Error inserting stores:', error);
         throw error;
     }
 };
+export const deletedStoresDataFormatServices = async (id) => {
+    try {
+        // console.log("STORE PAYLOAD:", payload)
+         const response = await Stores.destroy({ where: { id } });
+        return response;
+        // const response = await Stores.create({ ...payload });
+        // return response;
+    } catch (error) {
+        console.error('Error inserting stores:', error);
+        throw error;
+    }
+};
+// export const addStoresDataFormatServices = async (payload) => {
+//     try {
+//         // console.log("STORE PAYLOAD:", payload)
+//         const response = await Stores.create({ ...payload });
+//         return response.save();
+//     } catch (error) {
+//         console.error('Error inserting stores:', error);
+//         throw error;
+//     }
+// };
 
 export const getAllStoresDataServices = async () => {
     try {

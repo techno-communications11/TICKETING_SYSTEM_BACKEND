@@ -1,4 +1,4 @@
-import { addStoresDataExcelFormatServices, addStoresDataFormatServices, getAllStoresDataServices } from "../Servicess/stores.services.js";
+import { addStoresDataExcelFormatServices, addStoresDataFormatServices, deletedStoresDataFormatServices, getAllStoresDataServices } from "../Servicess/stores.services.js";
 
 const addStoresExcelFormatDataController = async (req, res) => {
     try {
@@ -63,11 +63,13 @@ const addStoresExcelFormatDataController = async (req, res) => {
 
 const addStoresFormatDataController = async (req, res) => {
     try {
-        const  obj  = req.body;
-        console.log("obj", obj)
-        const response = await addStoresDataFormatServices(obj);
+        const obj = req.body;
+        // console.log("obj", obj.formData)
+        const response = await addStoresDataFormatServices(obj.formData);
+        // console.log("response", response)
         return res.status(200).json({ status: 200, sucess: true, message: "sucess" })
     } catch (error) {
+        console.log("error", error.message)
         return res.status(500).json({ status: 500, sucess: false, message: "internal server error", error: error.message })
     }
 }
@@ -80,9 +82,20 @@ const getAllStoresDataControllers = async (req, res) => {
         return res.status(500).json({ status: 500, sucess: false, message: "internal server error", error: error.message })
     }
 }
+const deleteStoresDataByIdControllers = async (req, res) => {
+    try {
+        const { id } = req.body;
+        const response = await deletedStoresDataFormatServices(id);
+        return res.status(200).json({ status: 200, sucess: true, message: "sucess", data: response })
+    } catch (error) {
+        console.log(error.message)
+        return res.status(500).json({ status: 500, sucess: false, message: "internal server error", error: error.message })
+    }
+}
 
 export {
     addStoresExcelFormatDataController,
     getAllStoresDataControllers,
-    addStoresFormatDataController
+    addStoresFormatDataController,
+    deleteStoresDataByIdControllers
 }
