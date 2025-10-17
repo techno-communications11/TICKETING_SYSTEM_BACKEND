@@ -189,6 +189,7 @@ const login = async (req, res) => {
             os: userAgent.os,
             device: userAgent.platform,
             location: `${locationInfo.city}, ${locationInfo.country_name}`, // For now, leave this empty or integrate GeoIP later
+            description: "login"
         }
         // console.log("logsdata", logsData)
         // console.log("location", locationInfo.city, locationInfo.country_name, locationInfo)
