@@ -6,8 +6,8 @@ const addStoresExcelFormatDataController = async (req, res) => {
         // But we also support { excelData: [...] } or { chunk: [...] } just in case
         const body = req.body;
         const payload = Array.isArray(body) ? body : body?.excelData ?? body?.chunk;
-        console.log("👉 Raw body:", req.body);
-        console.log("👉 Is array?", Array.isArray(req.body), "Length:", req.body?.length);
+        // console.log("👉 Raw body:", req.body);
+        // console.log("👉 Is array?", Array.isArray(req.body), "Length:", req.body?.length);
 
         if (!Array.isArray(payload)) {
             return res.status(400).json({ error: "Payload must be an array of rows" });
