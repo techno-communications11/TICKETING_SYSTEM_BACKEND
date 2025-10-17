@@ -61,6 +61,9 @@ const logsModule = sequelize.define("Logs", {
     location: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    description:{
+        type:DataTypes.STRING
     }
 }, {
     tableName: "logs",

@@ -1,9 +1,10 @@
 import express from 'express';
-import { getAllLogsControllers } from '../controllers/logs.services.js';
+import { deleteLogsControllers, getAllLogsControllers } from '../controllers/logs.services.js';
 
-const logsRouting= express.Router();
+const logsRouting = express.Router();
 
-logsRouting.get('/getAllLogs',getAllLogsControllers)
+logsRouting.get('/getAllLogs', getAllLogsControllers)
+logsRouting.post('/delete-logs', deleteLogsControllers)
 
 
 export default logsRouting;
