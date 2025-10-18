@@ -289,9 +289,9 @@ const deleteUser = async (req, res) => {
 const deleteMultipleUser = async (req, res) => {
     try {
         const { id } = req.body;
-        console.log(id)
+        // console.log(id)
         const response = await deleteMultipleUserAccountService(id);
-        console.log(response)
+        // console.log(response)
         return res.status(200).json({ status: 200, success: true, message: "success" })
     } catch (error) {
         return res.status(500).json({ status: 500, success: false, message: "internal ser ver error", error: error.message })

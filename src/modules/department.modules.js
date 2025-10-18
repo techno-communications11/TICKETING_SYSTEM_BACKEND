@@ -1,15 +1,23 @@
-import mongoose from "mongoose";
-
-const { Schema } = mongoose;
-
-
-const departmentSchema = new Schema({
+import { DataTypes } from "sequelize";
+import sequelize from "../config/db.js";
+import { v4 as uuidv4 } from 'uuid';
+const departmentModule = sequelize.define("departments", {
+    id: {
+        type: DataTypes.STRING,
+        primaryKey: true,
+        defaultValue: () => uuidv4() // MongoDB style unique ID
+    },
     name: {
-        type: String,
-        require: true
-    }
-}, { timestamps: true });
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+}, {
+    tableName: "departments",
+    timestamps: true
+});
 
-const departmentModule = mongoose.model('departments', departmentSchema);
-
-export default departmentModule
+export default departmentModule;

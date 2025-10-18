@@ -35,6 +35,6 @@ db.camcastcredentials = camcredentialsModule;
 db.employeeContact = employeecontactModule;
 db.memphisstructure = memphisModule;
 db.Comment = CommentModule;
-db.TicketProgress = TicketProgressModule
+db.TicketProgress = TicketProgressModule;
 
 export default db;

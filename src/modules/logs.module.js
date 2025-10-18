@@ -1,25 +1,5 @@
-// import mongoose from "mongoose";
-
-// const {Schema}=mongoose;
-
-// const logsSchema=new Schema({
-//     date:{type:Date,default:Date.now},
-//     time:{type:String,default:Date.now},
-//     user:{type:String,required:true},
-//     data:{type:[Object],required:true},
-//     status:{type:String,required:true},
-//     ip:{type:String,required:true},
-//     browser:{type:String,required:true},
-//     os:{type:String,required:true},
-//     device:{type:String,required:true},
-//     location:{type:String,required:true},
-// },{timestamps:true});
-
-// const logsModule=mongoose.model("logs",logsSchema);
-// export default logsModule;
-
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js"; // Make sure this points to your MySQL Sequelize instance
+import sequelize from "../config/db.js"; 
 
 const logsModule = sequelize.define("Logs", {
     date: {
