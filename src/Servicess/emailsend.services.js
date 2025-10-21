@@ -134,17 +134,17 @@ export const sendemailtomanagerServices = async (newTicket, email) => {
 export const sendEmailToManagers = async (TicketId, newTicket) => {
     try {
         const id = newTicket.managerID;
+        // console.log(newTicket.email)
         const marketManagerEmail = newTicket.market_manager_email;
         const districtManagerEmail = newTicket.dm_email;
         console.log("📩 Sending Emails To:", marketManagerEmail, districtManagerEmail);
-
         const emailBody = `
 <div style="font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px;">
     <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);">
         
         <!-- Header -->
         <div style="text-align: center; border-bottom: 3px solid #007BFF; padding-bottom: 10px;">
-            <img src="https://ticketing.techno-communications.com/logoT.webp" alt="Techno-Communications Logo" style="width: 120px; margin-bottom: 10px;">
+            <img src="https://res.cloudinary.com/dynibfqrm/image/upload/v1761081529/jt91yuk0vepgzpmlvbto.webp" alt="Techno-Communications Logo" style="width: 120px; margin-bottom: 10px;">
             <h2 style="color: #007BFF; margin: 0;">TECHNO-COMMUNICATIONS LLC</h2>
             <p style="color: #555; font-size: 14px; margin: 5px 0;">Reliable IT & Customer Support Solutions</p>
         </div>
@@ -164,15 +164,7 @@ export const sendEmailToManagers = async (TicketId, newTicket) => {
             </div>
 
             <p style="font-size: 14px; color: #666; margin-top: 15px;">Click below to approve or decline this ticket.</p>
-        </div>
-
-        <!-- Call to Action -->
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="https://ticketing-systems-five.vercel.app/approve-ticket/${id}/${newTicket._id}" 
-               style="background-color: #28A745; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; font-weight: bold;">
-                ✅ Approve Ticket
-            </a>
-        </div>
+        </div>     
 
         <!-- Footer -->
         <div style="text-align: center; margin-top: 20px; padding-top: 10px; border-top: 1px solid #ddd;">
@@ -183,12 +175,19 @@ export const sendEmailToManagers = async (TicketId, newTicket) => {
     </div>
 </div>
 `;
-
+        //  <!-- Call to Action -->
+        //         <div style="text-align: center; margin-top: 20px;">
+        //             <a href="https://ticketing-systems-five.vercel.app/approve-ticket/${id}/${newTicket._id}" 
+        //                style="background-color: #28A745; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; font-weight: bold;">
+        //                 ✅ Approve Ticket
+        //             </a>
+        //         </div>
         // Send emails to both Market Manager & District Manager
+        // console.log(marketManagerEmail)
         const sendEmails = await Promise.all([
             resend.emails.send({
                 from: 'ticketing@techno-communications.com',
-                to: marketManagerEmail,
+                to: newTicket.email,
                 // to: 'suffiyanahmed804092@gmail.com',
                 subject: `🚀 Approval Needed: Ticket #${TicketId}`,
                 html: emailBody

@@ -1,10 +1,36 @@
-import { getAllUserDataServices, getCurrentUserDataServices } from "../Servicess/auth.services.js";
+import { findByIdService, getAllUserDataServices, getCurrentUserDataServices } from "../Servicess/auth.services.js";
 import { sendemailServices, sendEmailToManagers, sendemailtomanagerServices } from "../Servicess/emailsend.services.js";
+import { saveLogsServices } from "../Servicess/logs.services.js";
 import { approvedTicketServices, assignTicketService, closedTicketFromAgentServices, completeTicketFromAgentServices, createTicketsServices, deleteTicketsService, deniedTicketServices, getAllTicketsDataServices, reopenTicketServices, transferTicketServices, updateAgnetStatusServices, updateTicketProgressService, updateTicketsServices, updateTicketStatusService } from "../Servicess/tickets.services.js"
-
+import axios from 'axios';
 export const createTicketsControllers = async (req, res) => {
     try {
         const { ticketId, formData, email } = req.body;
+        // const { ticketId, formData, email, ip, id } = req.body;
+        // const existingUser = await findByIdService(id)
+        // const userAgent = req.useragent;
+        // let locationInfo = {};
+        // try {
+        //     const response = await axios.get(`https://ipapi.co/${ip}/json/`);
+        //     locationInfo = response.data;
+        // } catch (error) {
+        //     console.error('Location fetch error:', error.message);
+        //     locationInfo = { city: "Unknown", country_name: "Unknown" };
+        // }
+        // const logsData = {
+        //     date: new Date(),
+        //     time: new Date().toLocaleTimeString(),
+        //     user: existingUser.id,
+        //     data: existingUser,
+        //     status: "success",
+        //     ip: ip,
+        //     browser: userAgent.browser,
+        //     os: userAgent.os,
+        //     device: userAgent.platform,
+        //     location: `${locationInfo.city}, ${locationInfo.country_name}`, // For now, leave this empty or integrate GeoIP later
+        //     description: `Create Ticket #${ticketId}`
+        // }
+        // await saveLogsServices(logsData);
         const response = await createTicketsServices(ticketId, formData);
         const sendemail = sendEmailToManagers(ticketId, formData, email);
         if (sendemail) return res.status(200).json({ status: 200, sucess: true, message: "sucessfully ticket save and also send mail", data: response })
@@ -17,9 +43,35 @@ export const createTicketsControllers = async (req, res) => {
 
 export const getAllTicketsControllers = async (req, res) => {
     try {
+        // const { ip, currentUserId, description } = req.query;
+        // const existingUser = await findByIdService(currentUserId)
+        // const userAgent = req.useragent;
+        // let locationInfo = {};
+        // try {
+        //     const response = await axios.get(`https://ipapi.co/${ip}/json/`);
+        //     locationInfo = response.data;
+        // } catch (error) {
+        //     console.error('Location fetch error:', error.message);
+        //     locationInfo = { city: "Unknown", country_name: "Unknown" };
+        // }
+        // const logsData = {
+        //     date: new Date(),
+        //     time: new Date().toLocaleTimeString(),
+        //     user: existingUser.id,
+        //     data: existingUser,
+        //     status: "success",
+        //     ip: ip,
+        //     browser: userAgent.browser,
+        //     os: userAgent.os,
+        //     device: userAgent.platform,
+        //     location: `${locationInfo.city}, ${locationInfo.country_name}`, // For now, leave this empty or integrate GeoIP later
+        //     description: description
+        // }
         const response = await getAllTicketsDataServices()
+        // await saveLogsServices(logsData);
         return res.status(200).json({ status: 200, sucess: true, message: "sucess get all tickets", data: response })
     } catch (error) {
+        console.log("error", error.message)
         return res.status(500).json({ status: 500, sucess: false, message: "internal server error", error: error.message })
     }
 }

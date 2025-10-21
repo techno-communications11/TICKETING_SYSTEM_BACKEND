@@ -13,7 +13,7 @@ const departmentModule = sequelize.define("departments", {
     },
     email: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
     },
 }, {
     tableName: "departments",
