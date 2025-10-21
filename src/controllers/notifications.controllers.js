@@ -1,4 +1,4 @@
-import { addNotifications, getAllNotifications, updateNotificationsServices } from "../Servicess/notifications.services.js"
+import { addNotifications, deleteNotifications, getAllNotifications, updateNotificationsServices } from "../Servicess/notifications.services.js"
 
 export const addNotificationsCOntroller = async (req, res) => {
     try {
@@ -25,6 +25,15 @@ export const updateNotificationsController = async (req, res) => {
     try {
         const {userId, agent_notification, manager_notification } = req.body;
         const response = await updateNotificationsServices(userId, agent_notification, manager_notification);
+        return res.status(200).json({ statsu: 200, message: "sucessfully", data: response })
+    } catch (error) {
+        return res.status(500).json({ statsu: 500, message: "server error", error: error.message })
+    }
+}
+export const deleteNotificationsByIdController = async (req, res) => {
+    try {
+        const {id} = req.body;
+        const response = await deleteNotifications(id);
         return res.status(200).json({ statsu: 200, message: "sucessfully", data: response })
     } catch (error) {
         return res.status(500).json({ statsu: 500, message: "server error", error: error.message })

@@ -72,6 +72,15 @@ export const getAllNotifications = async () => {
         throw error;
     }
 };
+// Get all notifications
+export const deleteNotifications = async (id) => {
+    try {
+        const response = await Notification.destroy({ where: { id } }); // Sequelize me findAll hota hai
+        return response;
+    } catch (error) {
+        throw error;
+    }
+};
 
 // Update notification by ID
 export const updateNotificationsServices = async (id, agent_notification, manager_notification) => {
