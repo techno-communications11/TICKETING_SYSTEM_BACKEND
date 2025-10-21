@@ -152,7 +152,7 @@ export const sendEmailToManagers = async (TicketId, newTicket) => {
         <!-- Main Content -->
         <div style="padding: 20px 0;">
             <p style="font-size: 16px; color: #333;"><strong>Dear Manager,</strong></p>
-            <p style="font-size: 16px; color: #333;">A new ticket requires your approval. Please review the details below:</p>
+            <p style="font-size: 16px; color: #333;">A new ticket requires. Please review the details below:</p>
 
             <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-top: 10px;">
                 <p style="margin: 5px 0;"><strong>Ticket ID:</strong> ${TicketId}</p>
@@ -163,7 +163,7 @@ export const sendEmailToManagers = async (TicketId, newTicket) => {
                 <p style="margin: 5px 0;"><strong>Priority:</strong> <span style="color: #FF0000; font-weight: bold;">${newTicket.priority || "Medium"}</span></p>
             </div>
 
-            <p style="font-size: 14px; color: #666; margin-top: 15px;">Click below to approve or decline this ticket.</p>
+           
         </div>     
 
         <!-- Footer -->
@@ -181,7 +181,9 @@ export const sendEmailToManagers = async (TicketId, newTicket) => {
         //                style="background-color: #28A745; color: white; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-size: 16px; font-weight: bold;">
         //                 ✅ Approve Ticket
         //             </a>
-        //         </div>
+        //         </div> 
+        
+        // <p style="font-size: 14px; color: #666; margin-top: 15px;">Click below to approve or decline this ticket.</p>
         // Send emails to both Market Manager & District Manager
         // console.log(marketManagerEmail)
         const sendEmails = await Promise.all([
