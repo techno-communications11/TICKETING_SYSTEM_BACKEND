@@ -89,6 +89,7 @@ export const assignedTicketController = async (req, res) => {
     }
 }
 
+
 export const updateTicektStatusControllers = async (req, res) => {
     try {
         const { id } = req.body;
