@@ -134,6 +134,7 @@ export const completeTicketFromAgentController = async (req, res) => {
         return res.status(200).json({ status: 200, success: true, message: "Successfully updated", data: response });
 
     } catch (error) {
+        console.log("ERROR", error.message)
         return res.status(500).json({ status: 500, success: false, message: "Internal Server Error", error: error.message });
     }
 }

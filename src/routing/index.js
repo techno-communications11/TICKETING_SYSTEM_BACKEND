@@ -14,6 +14,7 @@ import camcredentialRouting from './camcredentails.routing.js';
 import employeeContactRouting from './employeecontact.routing.js';
 import memphisRouting from './memphisStructutre.routing.js';
 import commentRouter from './comment.routing.js';
+import ticketProgressRouter from './ticketprogress.routing.js';
 
 const router = express.Router();
 
@@ -31,6 +32,7 @@ router.use('/camcast', camcredentialRouting)
 router.use('/employee', employeeContactRouting)
 router.use('/memphis', memphisRouting)
 router.use('/comment', commentRouter)
+router.use('/ticket-progress', ticketProgressRouter)
 router.get("/ping", (req, res) => {
     console.log("Ping received at:", new Date().toLocaleTimeString());
     res.send("Server is awake!");

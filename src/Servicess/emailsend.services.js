@@ -134,7 +134,7 @@ export const sendemailtomanagerServices = async (newTicket, email) => {
 export const sendEmailToManagers = async (TicketId, newTicket) => {
     try {
         const id = newTicket.managerID;
-        // console.log(newTicket.email)
+        // console.log(newTicket?.managerName_email)
         const marketManagerEmail = newTicket.market_manager_email;
         const districtManagerEmail = newTicket.dm_email;
         console.log("📩 Sending Emails To:", marketManagerEmail, districtManagerEmail);
@@ -182,7 +182,7 @@ export const sendEmailToManagers = async (TicketId, newTicket) => {
         //                 ✅ Approve Ticket
         //             </a>
         //         </div> 
-        
+
         // <p style="font-size: 14px; color: #666; margin-top: 15px;">Click below to approve or decline this ticket.</p>
         // Send emails to both Market Manager & District Manager
         // console.log(marketManagerEmail)
