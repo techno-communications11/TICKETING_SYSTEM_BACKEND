@@ -21,7 +21,7 @@ const registered = async (req, res) => {
             return res.status(409).json({
                 status: 401,
                 error: 'User already exists',
-                message: "The username or email is already taken. Please choose another."
+                message: "Email is already taken. Please choose another."
             });
         }
         const hashpass = await bcrypt.hash(password, 10);
